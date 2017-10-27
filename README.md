@@ -22,10 +22,12 @@ npm install eztz
 ```javascript
 var eztz = require('eztz');
 
-var timeAlmaty = eztz.get(+6);          // Javascript Date object containing time of Almaty (GMT +6)
-var timeMoscow = eztz.get(3);           // Javascript Date object containing time of Moscow (GMT +3)
-var timeSanFrancisco = eztz.get(-7);    // Javascript Date object containing time of San Francisco (GMT -7)
-var timeJustForLulz = eztz.get(+28);    // Obviously there is no timezone with such offset, but it still works (GMT +28)
+var timeAlmaty = eztz.get(+6);            // Javascript Date object containing time in Almaty (GMT +6)
+var timeMoscow = eztz.get(3);             // Javascript Date object containing time in Moscow (GMT +3)
+var timeSanFrancisco = eztz.get(-7);      // Javascript Date object containing time in San Francisco (GMT -7)
+var timeJustForLulz = eztz.get(+28);      // Obviously there is no timezone with such offset, but it still works
+
+console.log(timeAlmaty.toLocaleString()); // Prints '2017-10-27 06:41:38', being just another js Date object
 ```
 
 ## Other
