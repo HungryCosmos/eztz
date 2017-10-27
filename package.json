@@ -1,0 +1,49 @@
+{
+  "name": "eztz",
+  "version": "0.0.0-development",
+  "description": "I just want to get current date and time in a timezone using ONLY it's offset in hours. I'm so done looking for proper and 100% valid names.",
+  "main": "src/main/eztz.js",
+  "scripts": {
+    "commit": "git-cz",
+    "test": "mocha src/test/eztz.test.js -w",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HungryCosmos/eztz.git"
+  },
+  "keywords": [
+    "date-time",
+    "datetime",
+    "time-zone",
+    "timezone",
+    "current",
+    "date",
+    "time",
+    "zone",
+    "offset",
+    "hours",
+    "easy",
+    "ez",
+    "umd",
+    "browser",
+    "minimal",
+    "plugin"
+  ],
+  "author": "HungryCosmos <hungrycosmos@protonmail.com> (https://hungrycosmos.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HungryCosmos/eztz/issues"
+  },
+  "homepage": "https://github.com/HungryCosmos/eztz#readme",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "commitizen": "2.9.6",
+    "cz-conventional-changelog": "2.0.0",
+    "mocha": "4.0.1",
+    "semantic-release": "^8.2.0"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  }
+}
