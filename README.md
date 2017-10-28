@@ -22,8 +22,28 @@ This tool can do two things:
    + Time difference between Almaty and UTC: `eztz.diff(timeInAlmaty, timeUtc)`, which returns +6
    + Time difference between Moscow and Almaty: `eztz.diff(timeInMoscow, timeInAlmaty)`, which returns -3
 
-More detailed review of common usecases can be found below, in [Usage](#usage) section.
-Some info on [working environment](#working-environment).
+
+**NOTE**: value returned by this library is just a local date shifted to match the required timezone:  
+ ```javascript
+ // Prints 6 for me, as my local UTC offset is +6.
+ console.log(timeInMoscow.getTimezoneOffset() / -60);
+ ```
+
+*However*, [In practice it does the job](https://stackoverflow.com/a/11964609/8722066)
+```javascript
+console.log(timeInSanFrancisco.toLocaleString());   // 2017-10-27 17:09:06
+console.log(timeInAlmaty.toLocaleString());         // 2017-10-28 06:09:06
+console.log(timeInMoscow.toLocaleString());         // 2017-10-28 03:09:06
+console.log(timeInMoscow.toLocaleString('en-US', {  // Oct 28, 3:09 AM
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute:'numeric',
+  hour12: true }));
+```
+
+More detailed review of common usecases can be found below, in [Usage section](#usage)   
+Some info on [Working Environment](#working-environment)  
 
 
 ## Installation
@@ -51,7 +71,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
     var eztz = require('eztz');
     ```
 
-2. Get current time in various timezones, specifying it's [UTC time offset](https://en.wikipedia.org/wiki/List_of_UTC_time_offsets) as first argument
+2. Get current time in various timezones, specifying it's [UTC time offset](https://en.wikipedia.org/wiki/List_of_UTC_time_offsets) as first argument  
    2.1. UTC
     ```javascript
     var timeUtc = eztz.get(0);
@@ -81,7 +101,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
     var timeFictive = eztz.get(+25.852);
     ```
 
-3. Time difference in hours between specified Date objects
+3. Time difference in hours between specified Date objects  
    3.1. Calculated basically by substracting right from left
     ```javascript
     var diffFromAlmatyToMoscow = eztz.diff(timeInAlmaty, timeInMoscow);  // +3
@@ -111,7 +131,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
     var diffUtcIndia = eztz.diff(timeUtc, timeInIndia, 0);   // -5, not -6
     ```
 
-4. Get date shifted against another [Date](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date)
+4. Get date shifted against another [Date](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date)  
    4.1. GMT is 6h behind Almaty
     ```javascript
     var timeGmt = eztz.get(-6, timeInAlmaty);
@@ -125,7 +145,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
     var timeInMoscow = eztz.get(3, timeGmt);    // The same as eztz.get(3)
     ```
 
-5. **Danger**
+5. **NOTE**  
    5.1. Value returned by this library is just a local date shifted to match the required timezone
     ```javascript
     // Prints 6 for me, as my local UTC offset is +6.
@@ -136,7 +156,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
     console.log(timeInMoscow.getTime());                // 1509138546929
     console.log(timeInAlmaty.getTime());                // 1509149346929
     ```
-6. However
+6. *However*  
    6.1. [In practice it does the job](https://stackoverflow.com/a/11964609/8722066)
     ```javascript
     console.log(timeInSanFrancisco.toLocaleString());   // 2017-10-27 17:09:06
@@ -153,14 +173,17 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
 [Click to see full compiled usage example in wiki page](https://github.com/HungryCosmos/eztz/wiki)
 
 
-## Working environment
+## Working Environment
 
-This project assumes you have [NodeJS](http://nodejs.org/) installed.
-You should also have [npm](https://www.npmjs.com/) (this usually comes packaged with Node).
-In case you interested, Travis build passes with Node 4, but [semantic-release](https://github.com/semantic-release/semantic-release) plugin requires node >= 8.
+Prerequisites:
+ + [NodeJS](http://nodejs.org/) >= 4 to build. Current latest version is `8.8.1`, LTS is `6.11.5`  
+ + [NodeJS](http://nodejs.org/) >= 8 to use auto-publishing with [semantic-release](https://github.com/semantic-release/semantic-release)  
+ + [npm](https://www.npmjs.com/), which usually comes packaged with Node  
+ + [git](https://git-scm.com/) command line tool  
+ + [github](https://github.com), [travis](https://travis-ci.org), [coveralls](https://coveralls.io) accounts  
+ + [npm](https://www.npmjs.com/) account  
 
-And you may need a recent version of [git](https://git-scm.com/) and might want to sign up at [coveralls](https://coveralls.io).
 
-
-## Reference
-This library was developed by [me](https://twitter.com/HungryCosmos) to power up [my github page](https://hungrycosmos.github.io/)
+## References
+This library was developed by [me](https://twitter.com/HungryCosmos) to power up [my github page](https://hungrycosmos.github.io/)  
+Thanks to Kent C. Dodds and his series on [starwars-names](https://github.com/kentcdodds/starwars-names)  
