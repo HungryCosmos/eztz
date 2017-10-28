@@ -10,71 +10,166 @@
 I just want to get current date and time in a timezone using ONLY it's offset in hours.
 I'm so done looking for proper and 100% valid names.
 
-## Project Setup
 
-This project assumes you have [NodeJS v6](http://nodejs.org/) or greater installed. You should
-also have [npm v3](https://www.npmjs.com/) or greater installed as well (this comes packaged
-with Node 6). And you may need a recent version of [git](https://git-scm.com/) just in case.
+## About
+
+This tool can do two things:
+1. **`get`** - time in any timezone as [Date](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date) knowing only it's [UTC time offset](https://en.wikipedia.org/wiki/List_of_UTC_time_offsets):
+   + UTC time: `eztz.get(0)`
+   + Almaty time (GMT+6): `eztz.get(+6)`
+   + San Francisco time, knowing it's 13h behind Almaty: `eztz.get(-13, timeInAlmaty)`
+2. **`diff`** - calcualte time difference (measured in hours) as `number` between two [Date](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date) objects:
+   + Time difference between Almaty and UTC: `eztz.diff(timeInAlmaty, timeUtc)`, which returns +6
+   + Time difference between Moscow and Almaty: `eztz.diff(timeInMoscow, timeInAlmaty)`, which returns -3
+
+More detailed review of common usecases can be found below, in [Usage](#usage) section.
+Some info on [working environment](#working-environment).
+
 
 ## Installation
 
 This package is distributed via npm:
-
 ```
 npm install eztz
 ```
 
-## Usage
+And available at npmcdn([https://unpkg.com/](unpkg)):
++ [eztz.js](https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js)
++ [eztz.min.js](https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js)
 
-```javascript
-
-// Imports
-var eztz = require('eztz');
-
-
-// Current time in various time zones
-var timeUtc1 = eztz.get();                  // Javascript Date object containing time in UTC (GMT)
-var timeUtc2 = eztz.get(0);                 // Another way to get UTC time is to explicitly call for it
-var timeInAlmaty = eztz.get(+6);            // Javascript Date object containing time in Almaty (GMT +6)
-var timeInMoscow = eztz.get(3);             // Javascript Date object containing time in Moscow (GMT +3)
-var timeInSanFrancisco = eztz.get(-7);      // Javascript Date object containing time in San Francisco (GMT -7)
-var justForLulz = eztz.get(+25.852);        // Obviously there is no timezone with such offset, but it still works
-
-// Time difference in hours between specified Date objects; calculated by substracting right from left
-var diffFromAlmatyToMoscow = eztz.diff(timeInAlmaty, timeInMoscow);  // +3, Almaty is 3h ahead of Moscow
-var diffFromMoscowToAlmaty = eztz.diff(timeInMoscow, timeInAlmaty);  // -3, Almaty +6, Moscow +3; 3 - 6 = -3
-
-// Specify number of decimals required to get required precision
-var diffDefault1 = eztz.diff(justForLulz, timeUtc1, 1);    // 25.9   -   1 decimal place as requested
-var diffDefault2 = eztz.diff(justForLulz, timeUtc1);       // 25.9   -   rounding to 1 decimal place by default
-var diffRounded = eztz.diff(justForLulz, timeUtc1, 0);     // 26     -   0 decimals
-var diffExact = eztz.diff(justForLulz, timeUtc1, 3);       // 25.852 -   3 decimals
-
-// Shifted time of various time zones
-var timeIn6hBehindLocal = eztz.get(-6, new Date());       // Returns time of a timezone located 6h behind local zone
-var timeInAlmatyFromMoscow = eztz.get(+3, timeInMoscow);  // Returns time of a timezone located 3h ahead Moscow
-var timeIn6hAheadUtc1 = eztz.get(6, timeUtc1);            // Returns time of a timezone located 6h ahead GMT
-var timeIn6hAheadUtc1 = eztz.get(6);                      // Short way to do the same thing
-
-
-// Note that value returned by this library is just a local date shifted to match the required timezone
-console.log(timeUtc1.getTimezoneOffset() / -60);    // Prints 6 for me, as my local UTC offset is +6.
-
-// Further manipulation may produce unexpected results, for example .getTime() should actually return the same value
-console.log(timeInMoscow.getTime());                // Prints '1509138546929'
-console.log(timeInAlmaty.getTime());                // Prints '1509149346929'
-
-// However, in practice it does the job, see https://stackoverflow.com/a/11964609/8722066
-console.log(timeInSanFrancisco.toLocaleString());   // Prints '2017-10-27 17:09:06'
-console.log(timeInAlmaty.toLocaleString());         // Prints '2017-10-28 06:09:06'
-console.log(timeInMoscow.toLocaleString());         // Prints '2017-10-28 03:09:06'
-console.log(timeInMoscow.toLocaleString('en-US', {  // Prints 'Oct 28, 3:09 AM'
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute:'numeric',
-    hour12: true }));
+Browser-ready:
+```html
+<script src="https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js"></script>
 ```
 
-## Other
+
+## Usage
+
+Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://github.com/HungryCosmos/eztz/wiki)
+1. Import
+    ```javascript
+    var eztz = require('eztz');
+    ```
+
+2. Get current time in various timezones, specifying it's [UTC time offset](https://en.wikipedia.org/wiki/List_of_UTC_time_offsets) as first argument
+   2.1. UTC
+    ```javascript
+    var timeUtc = eztz.get(0);
+    ```
+   2.2. Pro- way to get UTC date-time
+    ```javascript
+    var timeUtc = eztz.get();
+    ```
+   2.3. Almaty (GMT+6)
+    ```javascript
+    var timeInAlmaty = eztz.get(+6);
+    ```
+   2.4. Moscow (GMT+3), note that `+` is not necessary, since `+3` is just `3`
+    ```javascript
+    var timeInMoscow = eztz.get(3);
+    ```
+   2.5. San Francisco (GMT-7)
+    ```javascript
+    var timeInSanFrancisco = eztz.get(-7);
+    ```
+   2.6. India (GMT+5:30). Offset of `5h 30m` is basically `5.5h`
+    ```javascript
+    var timeInIndia = eztz.get(5.5);
+    ```
+   2.7. Fictive Time Zone, say GMT+25.852, still works
+    ```javascript
+    var timeFictive = eztz.get(+25.852);
+    ```
+
+3. Time difference in hours between specified Date objects
+   3.1. Calculated basically by substracting right from left
+    ```javascript
+    var diffFromAlmatyToMoscow = eztz.diff(timeInAlmaty, timeInMoscow);  // +3
+    ```
+   3.2. Provides negated values if switch places
+    ```javascript
+    var diffFromMoscowToAlmaty = eztz.diff(timeInMoscow, timeInAlmaty);  // -3
+    ```
+   3.3. Limits number of decimal places to 1 by default
+    ```javascript
+    var diffDefault = eztz.diff(timeFictive, timeUtc);       // 25.9
+    ```
+   3.4. But you can specify it explicitly as third argument
+    ```javascript
+    var diffDefault = eztz.diff(timeFictive, timeUtc, 1);    // 25.9
+    ```
+   3.5. And drop decimal part by feeding 0
+    ```javascript
+    var diffRound = eztz.diff(timeFictive, timeUtc, 0);      // 26
+    ```
+   3.5. Or get exact value with 3
+    ```javascript
+    var diffExact = eztz.diff(timeFictive, timeUtc, 3);      // 25.852
+    ```
+   3.6. Implemented with [Math.round()](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
+    ```javascript
+    var diffUtcIndia = eztz.diff(timeUtc, timeInIndia, 0);   // -5, not -6
+    ```
+
+4. Get date shifted against another [Date](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date)
+   4.1. GMT is 6h behind Almaty
+    ```javascript
+    var timeGmt = eztz.get(-6, timeInAlmaty);
+    ```
+   4.2. San Francisco is 13h behind Almaty
+    ```javascript
+    var timeSanFrancisco = eztz.get(-13, timeInAlmaty);
+    ```
+   4.3. Moscow is 3h ahead GMT
+    ```javascript
+    var timeInMoscow = eztz.get(3, timeGmt);    // The same as eztz.get(3)
+    ```
+
+5. **Danger**
+   5.1. Value returned by this library is just a local date shifted to match the required timezone
+    ```javascript
+    // Prints 6 for me, as my local UTC offset is +6.
+    console.log(timeInMoscow.getTimezoneOffset() / -60);
+    ```
+   5.2. Further manipulation may produce unexpected results, for example [.getTime()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime) should actually return the same value
+    ```javascript
+    console.log(timeInMoscow.getTime());                // 1509138546929
+    console.log(timeInAlmaty.getTime());                // 1509149346929
+    ```
+6. However
+   6.1. [In practice it does the job](https://stackoverflow.com/a/11964609/8722066)
+    ```javascript
+    console.log(timeInSanFrancisco.toLocaleString());   // 2017-10-27 17:09:06
+    console.log(timeInAlmaty.toLocaleString());         // 2017-10-28 06:09:06
+    console.log(timeInMoscow.toLocaleString());         // 2017-10-28 03:09:06
+    console.log(timeInMoscow.toLocaleString('en-US', {  // Oct 28, 3:09 AM
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute:'numeric',
+        hour12: true }));
+    ```
+
+[Click to see full compiled usage example in wiki page](https://github.com/HungryCosmos/eztz/wiki)
+
+
+## Working environment
+
+This project assumes you have [NodeJS](http://nodejs.org/) installed.
+You should also have [npm](https://www.npmjs.com/) (this usually comes packaged with Node).
+In case you interested, Travis build passes with Node 4.
+
+```
+$ node --version
+v4.8.5
+$ npm --version
+2.15.11
+$ nvm --version
+0.33.6
+```
+
+And you may need a recent version of [git](https://git-scm.com/) and might want to sign up at [coveralls](https://coveralls.io).
+
+
+## Reference
 This library was developed by [me](https://twitter.com/HungryCosmos) to power up [my github page](https://hungrycosmos.github.io/)
