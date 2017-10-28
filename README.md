@@ -157,16 +157,7 @@ Read step-by-step guide below, or copy-paste compiled sample in [wiki](https://g
 
 This project assumes you have [NodeJS](http://nodejs.org/) installed.
 You should also have [npm](https://www.npmjs.com/) (this usually comes packaged with Node).
-In case you interested, Travis build passes with Node 4.
-
-```
-$ node --version
-v4.8.5
-$ npm --version
-2.15.11
-$ nvm --version
-0.33.6
-```
+In case you interested, Travis build passes with Node 4, but [semantic-release](https://github.com/semantic-release/semantic-release) plugin requires node >= 8.
 
 And you may need a recent version of [git](https://git-scm.com/) and might want to sign up at [coveralls](https://coveralls.io).
 
