@@ -1,4 +1,11 @@
 /**
+ * Number.EPSILON polyfill for IE
+ * @type {number} with a value of approximately 2^-52
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON
+ */
+const EPSILON = 2.2204460492503130808472633361816E-16;
+
+/**
  * Calculates time in timezone UTC(GMT). The resulting utc object isn't really an UTC date,
  * but a local date shifted to match the UTC time. However, in practice it does the job.
  * See https://stackoverflow.com/a/11964609/8722066
@@ -59,7 +66,7 @@ function getTimeDifferenceHours(thisDate, thatDate, decimals) {
         || typeof decimals !== 'number' || decimals < 0);
     let precision = Math.pow(10, isDecimalsNumberPresent ? Math.round(decimals) : 1);
 
-    return Math.round(exactValue * precision + Number.EPSILON) / precision;
+    return Math.round(exactValue * precision + EPSILON) / precision;
 }
 
 
