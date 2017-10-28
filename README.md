@@ -20,8 +20,9 @@ npm install eztz
 ## Usage
 
 ```javascript
+
 // Imports
-var eztz = require('./eztz');
+var eztz = require('eztz');
 
 
 // Current time in various time zones
@@ -34,7 +35,7 @@ var justForLulz = eztz.get(+25.852);        // Obviously there is no timezone wi
 
 // Time difference in hours between specified Date objects; calculated by substracting right from left
 var diffFromAlmatyToMoscow = eztz.diff(timeInAlmaty, timeInMoscow);  // +3, Almaty is 3h ahead of Moscow
-var diffFromMoscowToAlmaty = eztz.diff(timeInMoscow, timeInAlmaty);  // -3, since Almaty is +6 and Moscow is +3; 3 - 6 = -3
+var diffFromMoscowToAlmaty = eztz.diff(timeInMoscow, timeInAlmaty);  // -3, Almaty +6, Moscow +3; 3 - 6 = -3
 
 // Specify number of decimals required to get required precision
 var diffDefault1 = eztz.diff(justForLulz, timeUtc1, 1);    // 25.9   -   1 decimal place as requested
