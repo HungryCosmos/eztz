@@ -9,7 +9,7 @@
  * on return value will return your local timezone offset.
  */
 function getUtcDateTime() {
-    var now = new Date();
+    let now = new Date();
     return getRemoteDateTime(now.getTimezoneOffset() / 60, now);
 }
 
@@ -33,10 +33,10 @@ function getUtcDateTime() {
 function getRemoteDateTime(offsetInHours, baseDateTime) {
 
     // Time offset of remote time zone in milliseconds
-    var remoteTimezoneOffsetMillis = (!!offsetInHours ? offsetInHours : 0) * 60 * 60 * 1000;
+    let remoteTimezoneOffsetMillis = (!!offsetInHours ? offsetInHours : 0) * 60 * 60 * 1000;
 
     // Basis for addition: provided Date if possible, current UTC time otherwise
-    var basis = !!baseDateTime ? baseDateTime : getUtcDateTime();
+    let basis = !!baseDateTime ? baseDateTime : getUtcDateTime();
 
     // Date and time in remote timezone
     return new Date(basis.getTime() + remoteTimezoneOffsetMillis);
@@ -53,8 +53,11 @@ function getRemoteDateTime(offsetInHours, baseDateTime) {
  * {@link Date} objects measured in hours. It is positive when thatDate is bigger than thisDate.
  */
 function getTimeDifferenceHours(thisDate, thatDate, decimals) {
-    var exactValue = (thisDate.getTime() - thatDate.getTime()) / (1000 * 60 * 60);
-    var precision = Math.pow(10, (decimals == null || typeof decimals !== 'number' || decimals < 0) ? 1 : Math.round(decimals));
+    let exactValue = (thisDate.getTime() - thatDate.getTime()) / (1000 * 60 * 60);
+
+    let isDecimalsNumberPresent = !(typeof decimals === 'undefined' || decimals === null
+        || typeof decimals !== 'number' || decimals < 0);
+    let precision = Math.pow(10, isDecimalsNumberPresent ? Math.round(decimals) : 1);
 
     return Math.round(exactValue * precision + Number.EPSILON) / precision;
 }

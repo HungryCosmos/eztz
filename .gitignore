@@ -1,3 +1,5 @@
+# es5 and umd are available at unpkg
+dist/
 
 # Created by https://www.gitignore.io/api/node,webstorm
 
