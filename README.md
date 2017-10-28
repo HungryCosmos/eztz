@@ -22,7 +22,6 @@ This tool can do two things:
    + Time difference between Almaty and UTC: `eztz.diff(timeInAlmaty, timeUtc)`, which returns +6
    + Time difference between Moscow and Almaty: `eztz.diff(timeInMoscow, timeInAlmaty)`, which returns -3
 
-
 **NOTE**: value returned by this library is just a local date shifted to match the required timezone:  
  ```javascript
  // Prints 6 for me, as my local UTC offset is +6.
@@ -54,12 +53,12 @@ npm install eztz
 ```
 
 And available at npmcdn([https://unpkg.com/](unpkg)):
-+ [eztz.js](https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js)
-+ [eztz.min.js](https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js)
++ [eztz.js](https://unpkg.com/eztz@1.1.2/dist/umd/eztz.min.js)
++ [eztz.min.js](https://unpkg.com/eztz@1.1.2/dist/umd/eztz.min.js)
 
 Browser-ready:
 ```html
-<script src="https://unpkg.com/eztz@1.1.1/dist/umd/eztz.min.js"></script>
+<script src="https://unpkg.com/eztz@1.1.2/dist/umd/eztz.min.js"></script>
 ```
 
 
