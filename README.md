@@ -1,5 +1,12 @@
 # eztz
 
+[![Build Status](https://img.shields.io/travis/HungryCosmos/eztz/master.svg?style=flat-square)](https://travis-ci.org/HungryCosmos/eztz.svg?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/github/HungryCosmos/eztz/master.svg?style=flat-square)](https://coveralls.io/github/HungryCosmos/eztz)
+[![NPM version](https://img.shields.io/npm/v/eztz.svg?style=flat-square)](https://www.npmjs.com/package/eztz)
+[![NPM downloads](https://img.shields.io/npm/dm/eztz.svg?style=flat-square)](https://www.npmjs.com/package/eztz)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Commitizen wannabee](https://img.shields.io/badge/commitizen-wannabee-yellowgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 I just want to get current date and time in a timezone using ONLY it's offset in hours.
 I'm so done looking for proper and 100% valid names.
 
