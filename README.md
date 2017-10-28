@@ -1,6 +1,6 @@
 # eztz
 
-[![Build Status](https://img.shields.io/travis/HungryCosmos/eztz/master.svg?style=flat-square)](https://travis-ci.org/HungryCosmos/eztz.svg?branch=master)
+[![Build Status](https://img.shields.io/travis/HungryCosmos/eztz/master.svg?style=flat-square)](https://travis-ci.org/HungryCosmos/eztz)
 [![Coverage Status](https://img.shields.io/coveralls/github/HungryCosmos/eztz/master.svg?style=flat-square)](https://coveralls.io/github/HungryCosmos/eztz)
 [![NPM version](https://img.shields.io/npm/v/eztz.svg?style=flat-square)](https://www.npmjs.com/package/eztz)
 [![NPM downloads](https://img.shields.io/npm/dm/eztz.svg?style=flat-square)](https://www.npmjs.com/package/eztz)
